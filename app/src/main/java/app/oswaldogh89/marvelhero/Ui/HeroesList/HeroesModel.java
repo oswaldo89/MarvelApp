@@ -44,7 +44,7 @@ public class HeroesModel implements Interface.Model {
 
             @Override
             public void onFailure(Call<Marvel> call, Throwable t) {
-                //Log.v("MASCOTAS_APP", "ocurrio un error :" + t.toString());
+
             }
         });
     }
