@@ -1,9 +1,19 @@
 package app.oswaldogh89.marvelhero.Entities;
 
+
 public class Heroe {
     private String name;
     private String description;
     private thumbnail thumbnail;
+    private Comic comics;
+
+    public Comic getComics() {
+        return comics;
+    }
+
+    public void setComics(Comic comics) {
+        this.comics = comics;
+    }
 
     public String getName() {
         return name;

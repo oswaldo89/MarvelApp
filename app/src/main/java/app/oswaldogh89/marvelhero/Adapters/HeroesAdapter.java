@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -27,10 +28,12 @@ public class HeroesAdapter extends RecyclerView.Adapter<HeroesAdapter.ListViewHo
     private ArrayList<Heroe> heroes;
     private Context context;
     private static final int LIMIT_CHARACTERES = 80;
+    private HeroItemView heroItemView;
 
-    public HeroesAdapter(Context context, ArrayList<Heroe> heroes) {
+    public HeroesAdapter(Context context, ArrayList<Heroe> heroes, HeroItemView view) {
         this.heroes = heroes;
         this.context = context;
+        this.heroItemView = view;
     }
 
     @Override
@@ -40,7 +43,7 @@ public class HeroesAdapter extends RecyclerView.Adapter<HeroesAdapter.ListViewHo
 
     @Override
     public void onBindViewHolder(ListViewHolder holder, final int position) {
-        Heroe res = heroes.get(position);
+        final Heroe res = heroes.get(position);
 
         Glide.with(context)
                 .load(res.getThumbnail().getPath() + "." + res.getThumbnail().getExtension())
@@ -49,6 +52,13 @@ public class HeroesAdapter extends RecyclerView.Adapter<HeroesAdapter.ListViewHo
 
         holder.name.setText(res.getName());
         holder.description.setText(prepareDescription(res.getDescription()));
+
+        holder.parentItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                heroItemView.onClickItem(res, position);
+            }
+        });
     }
 
     private String prepareDescription(String description) {
@@ -63,12 +73,14 @@ public class HeroesAdapter extends RecyclerView.Adapter<HeroesAdapter.ListViewHo
     static class ListViewHolder extends RecyclerView.ViewHolder {
         TextView name, description;
         ImageView thumbnail;
+        LinearLayout parentItem;
 
         ListViewHolder(View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.name);
             description = itemView.findViewById(R.id.description);
             thumbnail = itemView.findViewById(R.id.thumbnail);
+            parentItem = itemView.findViewById(R.id.parentItem);
         }
     }
 
